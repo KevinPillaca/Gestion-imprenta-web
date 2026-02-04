@@ -1,0 +1,39 @@
+.btn-agregar {
+  background: #1e90ff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.contenedor-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.card {
+  width: 180px;
+  height: 220px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.imagen-producto {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.btn-detalle {
+  margin-top: 10px;
+  background: #49a942;
+  border: none;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}

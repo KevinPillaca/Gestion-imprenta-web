@@ -1,0 +1,66 @@
+
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #0088ff;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 11;
+  width: 320px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.form-group {
+  margin: 10px 0;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+}
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: #d0d0d0 !important; /* Fondo claro */
+  color: #555555d4 !important;               /* Texto negro */
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button.eliminar {
+  background: red;
+}
+
+button.modificar {
+  background: orange;
+}
+
+button.guardar {
+  background: limegreen;
+}
+
+button {
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}

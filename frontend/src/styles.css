@@ -1,0 +1,21 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/* style de las alertas*/
+.swal-title,
+.swal-text,
+.swal-button {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.swal-title{
+  color: rgb(0, 0, 0);
+}
+.swal-text{
+  color: rgb(64, 64, 64);
+}
+.swal-button{
+  background-color: #0E4D80;
+}

@@ -1,0 +1,98 @@
+<div class="form-container">
+
+  <form [formGroup]="clienteForm">
+
+    <div class="row">
+      <div class="field">
+        <label>Nombre / Razón Social</label>
+        <input type="text" formControlName="Nombre_Razon">
+      </div>
+
+      <div class="field">
+        <label>DNI / RUC</label>
+        <input type="text" formControlName="Dni_Ruc">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Teléfono</label>
+        <input type="text" formControlName="Telefono">
+      </div>
+
+      <div class="field">
+        <label>Correo</label>
+        <input type="email" formControlName="Correo">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Dirección</label>
+        <input type="text" formControlName="Direccion">
+      </div>
+
+      <div class="field">
+        <label>Departamento</label>
+        <input type="text" formControlName="Departamento">
+      </div>
+    </div>
+    <button class="btn-guardar" type="button" (click)="guardarCliente()">
+    Guardar
+    </button>
+
+  </form>
+  
+</div>
+
+<!-- tabla  de clientes -->
+<div class="tabla-clientes-container" #tablaRef>
+  <table class="tabla-clientes">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Nombre / Razon Social</th>
+        <th>Ruc / Dni</th>
+        <th>Telefono</th>
+        <th>Correo</th>
+        <th>Direccion</th>
+        <th>Departamento</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr 
+        *ngFor="let c of clientes; let i = index"
+        (click)="seleccionarCliente(c, i)"
+        [class.seleccionado]="clienteSeleccionado?.index === i"
+      >
+        <td>{{ i + 1 }}</td>
+        <td>{{ c.Nombre_Razon }}</td>
+        <td>{{ c.Dni_Ruc }}</td>
+        <td>{{ c.Telefono }}</td>
+        <td>{{ c.Correo }}</td>
+        <td>{{ c.Direccion }}</td>
+        <td>{{ c.Departamento }}</td>
+      </tr>
+
+      <tr *ngIf="clientes.length === 0">
+        <td colspan="7" class="no-data">
+          No hay clientes registrados aún.
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<!--botones  editar y eliminar -->
+<div class="acciones-contenedor">
+  <button class="btn-editar" (click)="onEditar()">
+    Editar
+  </button>
+
+  <button class="btn-eliminar" (click)="onEliminar()">
+    Eliminar
+  </button>
+</div>

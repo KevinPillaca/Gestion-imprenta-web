@@ -1,0 +1,32 @@
+<button class="btn-agregar" (click)="abrirModalAgregar()">Agregar Producto</button>
+<div class="contenedor-cards">
+
+  <div class="card" *ngFor="let p of productos">
+
+    <img 
+      [src]="'http://localhost:3000' + p.url_imagen" 
+      alt="producto" 
+      class="imagen-producto"
+    >
+
+    <button class="btn-detalle" (click)="abrirModalDetalle(p)">
+      Detalles
+    </button>
+
+  </div>
+
+</div>
+
+<!-- MODAL AGREGAR -->
+<app-modal-agregar-producto
+  *ngIf="mostrarModalAgregar"
+  (cerrar)="cerrarModalAgregar()">
+</app-modal-agregar-producto>
+
+<!-- MODAL DETALLE -->
+<app-modal-detalle-producto
+  *ngIf="mostrarModalDetalle"
+  [producto]="productoSeleccionado"
+  (cerrar)="cerrarModalDetalle()"
+  (eliminado)="onProductoEliminado($event)">
+</app-modal-detalle-producto>

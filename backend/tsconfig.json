@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    /* === ESTRUCTURA DE ARCHIVOS === */
+    "rootDir": "./src",             // Carpeta donde estará tu código TypeScript
+    "outDir": "./dist",             // Carpeta donde se generará el JavaScript compilado
+
+    /* === ENTORNO DE EJECUCIÓN === */
+    "target": "ES2020",             // Versión moderna de JS compatible con Node.js 18+
+    "module": "CommonJS",           // Tipo de módulo que usa Node.js
+    "moduleResolution": "node",     // Permite a TS resolver correctamente los imports
+    "esModuleInterop": true,        // Permite usar imports de módulos comunes sin errores
+    "types": ["node"],              // Añade tipos de Node.js automáticamente
+
+    /* === OPCIONES RECOMENDADAS === */
+    "strict": true,                 // Revisión estricta de tipos (mejor práctica)
+    "skipLibCheck": true,           // Evita errores innecesarios en las libs
+    "forceConsistentCasingInFileNames": true,
+
+    /* === MAPAS Y DEPURACIÓN === */
+    "sourceMap": true,              // Permite depurar con código TypeScript
+    "declaration": true,            // Genera archivos .d.ts (útil para mantener tipos)
+    "declarationMap": true,         // Mapas para archivos de declaración
+
+    /* === LIMPIEZA === */
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false
+  },
+  "include": ["src/**/*"],          // Incluye todo lo que esté dentro de /src
+  "exclude": ["node_modules"]       // Excluye dependencias
+}

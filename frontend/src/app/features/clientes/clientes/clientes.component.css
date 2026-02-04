@@ -1,0 +1,145 @@
+.form-container{
+  padding: 20px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);  
+}
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.row{
+  display: flex;
+  gap: 40px;
+  margin-bottom: 12px;
+}
+
+.field{
+  flex: 1;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+label{
+  color: #0E4D80;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+input{
+  font-size: 15px;
+  color: #181818;
+  padding: 8px;
+  width: 500px;
+  border-radius: 6px;
+  border: 1px solid #0E4D80;
+  outline: none;
+}
+
+.btn-guardar {
+  background-color: #0E4D80;
+  color: white;
+  border: none;
+  font-size: 17px;
+  font-weight:bold;
+  padding: 15px 25px;
+  margin-top: 18px;
+}
+
+.btn-guardar:hover{
+    background-color: #2e7bb9;
+}
+
+/* estyle de la tabla de cliente */
+.tabla-clientes-container{
+  width: 96%;
+  margin: 40px auto 0 auto;
+  max-height: 270px;     /* Altura aproximada para 6 filas */
+  overflow-y: auto;
+  position: relative;
+}
+.tabla-clientes{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.tabla-clientes thead{
+  background: #9abce6;
+}
+.tabla-clientes tbody{
+  background: #dcebfd;
+} 
+.tabla-clientes th,
+.tabla-clientes td{
+  padding: 10px;
+  border: 1px solid #000000;
+  font-size: 14px;
+  text-align: center;
+}
+
+.tabla-clientes tbody tr:hover{
+  background: #eaf0f8;
+  cursor: pointer;
+}
+
+.no-data{
+  text-align: center;
+  padding: 15px;
+  font-style: italic;
+  color: #555;
+}
+.tabla-clientes thead th{
+  position: sticky;
+  top: 0;
+  background: #9abce6;
+  z-index: 10;
+}
+
+    /* fila seleccionada */
+.seleccionado{
+  background: #4a90e2 !important;
+  color: white;
+}
+
+/* estyle boton editar y eliminar */
+.acciones-contenedor{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.btn-editar{
+  background:#F5A623;
+  color:white;
+  border:none;
+  padding:10px 35px;
+  font-size:17px;
+  font-weight:bold;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.btn-eliminar{
+  background:#E60000;
+  color:white;
+  border:none;
+  padding:10px 35px;
+  font-size:17px;
+  font-weight:bold;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.btn-editar:hover{
+  background-color: #fcbd58;
+}
+
+.btn-eliminar:hover{
+  background-color: #fe4040;
+}

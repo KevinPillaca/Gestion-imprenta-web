@@ -1,0 +1,37 @@
+
+<div class="modal-container">
+  <h2>Detalles Producto</h2>
+
+  <div class="form-group">
+    <label>Nombre:</label>
+    <input type="text" [(ngModel)]="producto.nombre" [disabled]="!modoEdicion">
+  </div>
+
+  <div class="form-group">
+    <label>Descripcion:</label>
+    <input type="text" [(ngModel)]="producto.descripcion" [disabled]="!modoEdicion">
+  </div>
+
+  <div class="form-group">
+    <label>Medida:</label>
+    <input type="text" [(ngModel)]="producto.medida" [disabled]="!modoEdicion">
+  </div>
+
+  <div class="form-group">
+    <label>Precio:</label>
+    <input type="text" [(ngModel)]="producto.precio" [disabled]="!modoEdicion">
+  </div>
+
+  <div class="imagen">
+    <p>Imagen ya subida</p>
+    <img [src]="producto.imagen" alt="Producto" width="150">
+  </div>
+
+  <div class="botones">
+    <button class="eliminar" (click)="eliminar()">ELIMINAR</button>
+    <button class="modificar" (click)="modificar()">MODIFICAR</button>
+    <button class="guardar" (click)="guardar()">GUARDAR</button>
+  </div>
+
+  <span class="cerrar" (click)="cerrarModal()">×</span>
+</div>

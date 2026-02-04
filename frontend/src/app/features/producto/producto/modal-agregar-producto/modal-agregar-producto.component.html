@@ -1,0 +1,30 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <h2>Agregar Producto</h2>
+
+    <form (submit)="guardar(); $event.preventDefault()">
+
+      <label>Nombre:</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ingrese nombre">
+
+      <label>Descripción:</label>
+      <input type="text" [(ngModel)]="descripcion" name="descripcion" placeholder="Descripción">
+
+      <label>Medida:</label>
+      <input type="text" [(ngModel)]="medida" name="medida" placeholder="Ej: m2">
+
+      <label>Precio:</label>
+      <input type="number" [(ngModel)]="precio" name="precio" placeholder="Ingrese precio">
+
+      <div class="upload-area">
+        <i class="fa fa-upload"></i>
+        <span>Subir Imagen</span>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+
+      <button type="submit" class="btn-guardar">GUARDAR</button>
+    </form>
+
+    <button class="btn-cerrar" (click)="cerrarModal()">×</button>
+  </div>
+</div>
