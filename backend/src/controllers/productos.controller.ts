@@ -1,91 +1,61 @@
 import { Request, Response } from "express";
-import { pool } from "../config/db";
+import { ProductosService } from "../services/productos.service";
 
-// GUARDAR PRODUCTOS EN LA BD
-export const createProduct = async (req: Request, res: Response) => {
-    try {
-        const { nombre, descripcion, medida, precio } = req.body;
+export class ProductosController {
+    constructor(private productosService: ProductosService) {}
 
-        const precioNumber = Number(precio); // Convertimos a número
+    public getProductos = async (_req: Request, res: Response) => {
+        try {
+            const productos = await this.productosService.getAll();
+            res.json(productos);
+        } catch (error) {
+            res.status(500).json({ error: "Error al obtener productos" });
+        }
+    };
 
-        const imagen = req.file ? `/uploads/productos/${req.file.filename}` : null;
+    public createProduct = async (req: Request, res: Response) => {
+        try {
+            const { nombre, descripcion, medida, precio } = req.body;
+            const imagen = req.file ? `/uploads/productos/${req.file.filename}` : "";
 
-        const sql = `
-            INSERT INTO productos (nombre, descripcion, medida, precio, url_imagen)
-            VALUES (?, ?, ?, ?, ?)
-        `;
+            const nuevoId = await this.productosService.create({
+                nombre,
+                descripcion,
+                medida,
+                precio: Number(precio),
+                url_imagen: imagen
+            });
 
-        const [result] = await pool.execute(sql, [
-            nombre,
-            descripcion,
-            medida,      // ahora string
-            precioNumber, // decimal convertido a number
-            imagen
-        ]);
+            res.status(201).json({ message: "Producto creado", id: nuevoId, imagen });
+        } catch (error) {
+            res.status(500).json({ error: "Error al guardar producto" });
+        }
+    };
 
-        return res.status(201).json({
-            message: "Producto creado correctamente",
-            id: (result as any).insertId,
-            imagen
-        });
+    public updateProducto = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const { nombre, descripcion, medida, precio } = req.body;
 
-    } catch (error: any) {
-        console.error(error);
-        return res.status(500).json({ error: "Error al guardar producto" });
-    }
-};
+            await this.productosService.update(id, {
+                nombre,
+                descripcion,
+                medida,
+                precio: Number(precio)
+            });
 
-// MOSTRAR PRODUCTOS EN EL FRONTEND
-export const getProductos = async (req: Request, res: Response) => {
-    try {
-        const [rows] = await pool.execute("SELECT * FROM productos ORDER BY producto_id DESC");
-        res.json(rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error al obtener productos" });
-    }
-};
+            res.json({ message: "Producto actualizado correctamente" });
+        } catch (error) {
+            res.status(500).json({ error: "Error al actualizar producto" });
+        }
+    };
 
-// MODIFICAR PRODUCTO EN LA DB
-export const updateProducto = async (req: Request, res: Response) => {
-    const id = req.params.id;
-    const { nombre, descripcion, medida, precio } = req.body;
-
-    const precioNumber = Number(precio);
-
-    try {
-        const sql = `
-            UPDATE productos 
-            SET nombre = ?, descripcion = ?, medida = ?, precio = ?
-            WHERE producto_id = ?
-        `;
-
-        await pool.execute(sql, [
-            nombre,
-            descripcion,
-            medida,
-            precioNumber,
-            id
-        ]);
-
-        return res.json({ message: "Producto actualizado correctamente" });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: "Error al actualizar producto" });
-    }
-};
-
-// ELIMINAR PRODUCTO EN LA DB
-export const deleteProducto = async (req: Request, res: Response) => {
-    try {
-        const { id } = req.params;
-
-        await pool.execute(`DELETE FROM productos WHERE producto_id = ?`, [id]);
-
-        res.json({ message: "Producto eliminado correctamente" });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error al eliminar el producto" });
-    }
-};
+    public deleteProducto = async (req: Request, res: Response) => {
+        try {
+            await this.productosService.delete(req.params.id);
+            res.json({ message: "Producto eliminado correctamente" });
+        } catch (error) {
+            res.status(500).json({ error: "Error al eliminar el producto" });
+        }
+    };
+}

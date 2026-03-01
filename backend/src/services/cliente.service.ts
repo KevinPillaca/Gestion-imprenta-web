@@ -2,74 +2,61 @@ import { pool } from "../config/db";
 import { Cliente } from "../models/cliente.model";
 
 export class ClienteService {
-
-//GUARDAR CLIENTE EN LA BASE DE DATOS
-  static async crearCliente(cliente: any) {
-  const query = `
-    INSERT INTO Cliente 
-    (Nombre_Razon, Dni_Ruc, Telefono, Correo, Direccion, Departamento) 
-    VALUES (?, ?, ?, ?, ?, ?)
-  `;
-
-  const values = [
-    cliente.Nombre_Razon,
-    cliente.Dni_Ruc,
-    cliente.Telefono,
-    cliente.Correo,
-    cliente.Direccion,
-    cliente.Departamento
-  ];
-
-  const [result]: any = await pool.query(query, values);
-
-  return {
-    cliente_id: result.insertId,
-    ...cliente
-  };
-}
-  //TRAER DATOS DEL CLIENTE DE LA BASE DE DATOS
- static async obtenerClientes() {
-    const [rows] = await pool.query(
-      "SELECT * FROM cliente ORDER BY clienteID DESC"
-    );
+  // GET - Traer clientes
+  async obtenerClientes() {
+    // Cambiado: cliente_id en minúscula
+    const [rows] = await pool.query("SELECT * FROM cliente ORDER BY cliente_id DESC");
     return rows;
   }
 
-  //ACTUALIZAR LA TABLA EN LA BASE DE DATOS
-  static async actualizarCliente(id: number, cliente: any) {
-    const sql = `
-      UPDATE cliente 
-      SET 
-        Nombre_Razon = ?, 
-        Dni_Ruc = ?, 
-        Telefono = ?, 
-        Correo = ?, 
-        Direccion = ?, 
-        Departamento = ?
-      WHERE ClienteID = ?;
+  // POST - Crear cliente
+  async crearCliente(cliente: Cliente) {
+    const query = `
+      INSERT INTO cliente 
+      (nombre_razon, ruc_dni, telefono, correo, direccion, departamento) 
+      VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
-      cliente.Nombre_Razon,
-    cliente.Dni_Ruc,
-    cliente.Telefono,
-    cliente.Correo,
-    cliente.Direccion,
-    cliente.Departamento,
-    id
+      cliente.nombre_razon,
+      cliente.ruc_dni,
+      cliente.telefono,
+      cliente.correo,
+      cliente.direccion,
+      cliente.departamento
+    ];
+
+    const [result]: any = await pool.query(query, values);
+    return { cliente_id: result.insertId, ...cliente };
+  }
+
+  // PUT - Actualizar cliente
+  async actualizarCliente(id: number, cliente: Partial<Cliente>) {
+    const sql = `
+      UPDATE cliente 
+      SET nombre_razon = ?, ruc_dni = ?, telefono = ?, correo = ?, direccion = ?, departamento = ?
+      WHERE cliente_id = ?;
+    `;
+
+    const values = [
+      cliente.nombre_razon,
+      cliente.ruc_dni,
+      cliente.telefono,
+      cliente.correo,
+      cliente.direccion,
+      cliente.departamento,
+      id
     ];
 
     const [result]: any = await pool.query(sql, values);
     return result;
   }
 
-  //ELIMINAR CLIENTE DE LA TABLA Y BASE DE DATOS
-  static async eliminarCliente(id: number) {
-    const [result]: any = await pool.query(
-      "DELETE FROM cliente WHERE ClienteID = ?",
-      [id]
-    );
+  // DELETE - Eliminar cliente
+  async eliminarCliente(id: number) {
+    // Cambiado: cliente_id en minúscula
+    const [result]: any = await pool.query("DELETE FROM cliente WHERE cliente_id = ?", [id]);
     return result;
   }
+  
 }
-

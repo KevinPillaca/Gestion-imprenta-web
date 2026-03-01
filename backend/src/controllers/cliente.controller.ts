@@ -1,87 +1,48 @@
 import { Request, Response } from "express";
 import { ClienteService } from "../services/cliente.service";
 
-//CREAR CLIENTE (POST)
-export const crearCliente = async (req: Request, res: Response) => {
-  try {
-    const nuevoCliente = await ClienteService.crearCliente(req.body);
-    return res.status(201).json({
-      message: "Cliente creado correctamente",
-      data: nuevoCliente
-    });
-  } catch (error: any) {
-    console.error("Error al crear cliente:", error);
-    return res.status(500).json({
-      message: "Error al crear cliente"
-    });
-  }
-};
+export class ClienteController {
+  constructor(private clienteService: ClienteService) {}
 
-//MOSTRAR CLIENTE (GET)
-export const getClientes = async (req: Request, res: Response) => {
-  try {
-    const clientes = await ClienteService.obtenerClientes();
-
-    res.json({
-      message: "Lista de clientes obtenida correctamente",
-      data: clientes
-    });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({
-      message: "Error al obtener los clientes"
-    });
-  }
-};
-
-//ACTUALIZAR CLIENTE (PUT)
-export const actualizarCliente = async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
-    const data = req.body;
-
-    if (!id) {
-      return res.status(400).json({ message: "ID inválido" });
+  public getClientes = async (_req: Request, res: Response) => {
+    try {
+      const clientes = await this.clienteService.obtenerClientes();
+      res.json({ message: "Lista obtenida", data: clientes });
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener clientes" });
     }
+  };
 
-    const result = await ClienteService.actualizarCliente(id, data);
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Cliente no encontrado" });
+  public crearCliente = async (req: Request, res: Response) => {
+    try {
+      const nuevo = await this.clienteService.crearCliente(req.body);
+      res.status(201).json({ message: "Cliente creado", data: nuevo });
+    } catch (error) {
+      res.status(500).json({ message: "Error al crear cliente" });
     }
+  };
 
-    res.json({
-      message: "Cliente actualizado correctamente",
-      data: { cliente_id: id, ...data }
-    });
+  public actualizarCliente = async (req: Request, res: Response) => {
+    try {
+      const id = Number(req.params.id);
+      const result = await this.clienteService.actualizarCliente(id, req.body);
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al actualizar el cliente" });
-  }
-};
+      if (result.affectedRows === 0) return res.status(404).json({ message: "No encontrado" });
 
-//ELIMINAR CLIENTE (DELETE)
-export const eliminarCliente = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-
-    const resultado = await ClienteService.eliminarCliente(Number(id));
-
-    if (resultado.affectedRows === 0) {
-      return res.status(404).json({
-        message: "Cliente no encontrado"
-      });
+      res.json({ message: "Actualizado", data: { id, ...req.body } });
+    } catch (error) {
+      res.status(500).json({ message: "Error al actualizar" });
     }
+  };
 
-    return res.json({
-      message: "Cliente eliminado correctamente"
-    });
+  public eliminarCliente = async (req: Request, res: Response) => {
+    try {
+      const resultado = await this.clienteService.eliminarCliente(Number(req.params.id));
+      if (resultado.affectedRows === 0) return res.status(404).json({ message: "No encontrado" });
 
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Error al eliminar el cliente"
-    });
-  }
-};
+      res.json({ message: "Eliminado correctamente" });
+    } catch (error) {
+      res.status(500).json({ message: "Error al eliminar" });
+    }
+  };
+}

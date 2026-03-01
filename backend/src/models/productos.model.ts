@@ -4,5 +4,5 @@ export interface Product {
     descripcion: string;
     medida: string;
     precio: number;
-    imagen: string; // ruta de la imagen
+    url_imagen: string; // ruta de la imagen
 }

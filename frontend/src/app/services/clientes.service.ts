@@ -25,4 +25,9 @@ getClientes(): Observable<any> {
 actualizarCliente(id: number, data: any): Observable<any> {
   return this.http.put(`${this.apiUrl}/${id}`, data);
 }
+
+// ELIMINAR CLIENTE (El que faltaba)
+  eliminarCliente(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }
